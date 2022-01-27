@@ -8,6 +8,7 @@ import 'package:rendezvous/Components/GeometryContainer.dart';
 import 'package:rendezvous/Components/NumKeyPad.dart';
 import 'package:rendezvous/View/GlocalCoin/UPIPay.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GlocalCoin extends StatelessWidget {
   const GlocalCoin({Key? key}) : super(key: key);
@@ -60,14 +61,31 @@ class GlocalCoin extends StatelessWidget {
                   ),
                 )),
             br(15),
-            Center(
-                child: ElevatedButton(
-                    onPressed: () => buyCoinModal(context),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0, vertical: 15),
-                      child: Text("Buy Glocal Coin"),
-                    ))),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              ElevatedButton(
+                  onPressed: () => buyCoinModal(context),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 15),
+                    child: Text("Buy Glocal Coin"),
+                  )),
+              brw(8),
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(MAIN_GREEN)),
+                  onPressed: () {
+                    launch("https://glocalmedia.tech/rendezvous/gcscan");
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 15),
+                    child: Text("View GC Blocks"),
+                  ))
+            ]),
+            br(30),
+            Text(
+              "You can view all the transactions held through Glocal Blockchain with GC Scan",
+            ),
             Spacer(),
             Center(
               child: Lottie.asset(

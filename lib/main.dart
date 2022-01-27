@@ -315,7 +315,6 @@ class _HomeOldState extends State<HomeOld> {
   }
 
   certifBottom(comp, rank) {
-    var size = MediaQuery.of(context).size;
     return showModalBottomSheet(
       context: context,
       builder: (context) {

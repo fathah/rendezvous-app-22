@@ -14,6 +14,7 @@ String merri = "Merriweather";
 String roboto = "Roboto";
 String sakkal = "Sakkal";
 String arabic = "Arabic";
+String noto = "Noto";
 
 String key = "29ac983eb5e7385be5d1d0b538d569b1";
 String ziqx = "88572a636fec095b2be3cdde678c2097";

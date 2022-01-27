@@ -1,11 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:rendezvous/inc/strings.dart';
-import 'package:rendezvous/inc/transition.dart';
-import 'package:rendezvous/main.dart';
 
-import 'inc/common.dart';
 
 class ScanCode extends StatefulWidget {
   @override
@@ -52,15 +48,7 @@ class _ScanCodeState extends State<ScanCode> {
           Expanded(
             flex: 1,
             child: Center(
-              child: (result != null)
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        'Invalid QR code. Please scan from your Rendezvous ID card',
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  : Text('Scan the chest code'),
+              child:  Text('Scan the chest code'),
             ),
           )
         ],

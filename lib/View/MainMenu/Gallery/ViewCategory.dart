@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class ViewCategory extends StatefulWidget {
@@ -120,11 +121,9 @@ class _ViewCategoryState extends State<ViewCategory> {
                 ),
                 br(10),
                 ElevatedButton(
-                    onPressed: () {
-                      var dio = Dio();
-                      getExternalStorageDirectory().then((value) async {
-                        await dio.download(imgLink, value!.path);
-                      });
+                    onPressed: () async {
+                      if (!await launch(imgLink))
+                        throw 'Could not launch $imgLink';
                     },
                     child: Text("Download")),
                 br(20),

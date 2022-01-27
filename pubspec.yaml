@@ -43,6 +43,7 @@ dependencies:
   video_360:
   youtube_player_flutter:
   dio:
+  wifi_connector: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -82,6 +83,9 @@ flutter:
         fonts:
             - asset: assets/fonts/Montserrat-Medium.ttf
             - asset: assets/fonts/Montserrat-Regular.ttf
+      - family: Noto
+        fonts:
+            - asset: assets/fonts/Noto.ttf
       - family: Merriweather
         fonts:
             - asset: assets/fonts/Merriweather-Regular.ttf

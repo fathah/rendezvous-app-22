@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'Functions/getAPIData.dart';
-import 'inc/common.dart';
 import 'inc/strings.dart';
 
 class Feeds extends StatefulWidget {

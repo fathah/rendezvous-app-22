@@ -13,7 +13,12 @@ Future getTransactions() async {
   if (mainBox!.get("transactions") != null) {
     return mainBox!.get("transactions");
   } else {
-    return await getTransactionFromAPI();
+    var res = await getTransactionFromAPI();
+    if (res == "FAILED") {
+      return [];
+    } else {
+      return res;
+    }
   }
 }
 
@@ -91,13 +96,14 @@ class GlocalPay extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("4575 6416 2485 2645",
+                      Text(
+                          "2022 4693  ${mainBox!.get('cardNo').split('JM')[0]} ${mainBox!.get('cardNo').split('JM')[1]}",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                           )),
                       brw(20),
-                      Text("28/22", style: TextStyle(color: Colors.black))
+                      Text("03/22", style: TextStyle(color: Colors.black))
                     ],
                   ),
                   br(5),
@@ -160,8 +166,7 @@ class GlocalPay extends StatelessWidget {
         FutureBuilder(
             future: getTransactions(),
             builder: (context, snapshot) {
-              if (!snapshot.hasData ||
-                  snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
                   width: double.infinity,
                   child: Column(
@@ -175,6 +180,20 @@ class GlocalPay extends StatelessWidget {
                       ),
                       br(10),
                       Text("Getting Transactions")
+                    ],
+                  ),
+                );
+              } else if (!snapshot.hasData) {
+                return Container(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      br(50),
+                      Icon(Icons.toll, color: MAIN_ORANGE),
+                      br(10),
+                      Text("No Transactions")
                     ],
                   ),
                 );

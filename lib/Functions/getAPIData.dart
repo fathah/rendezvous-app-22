@@ -15,12 +15,6 @@ Future saveToDB(String json) async {
   mainBox!.put(json, response.body);
 }
 
-Future getFeeds() async {
-  String url = "https://manzilmedia.net/apps/rendezvous/getJSON.php?file=feeds";
-  final response = await http.get(Uri.parse(url));
-  return json.decode(response.body);
-}
-
 Future getJSON(File file) async {
   final response = await file.readAsString();
   return json.decode(response);
@@ -39,6 +33,7 @@ Future<String> getUserDataFromAPI(cardId) async {
 
   if (res.statusCode == 200) {
     var decode = json.decode(res.body);
+
     if (decode['statusMsg'] == "AVAILABLE") {
       mainBox!.put("userName", decode['data']['user_name']);
       mainBox!.put("walletBalance", decode['data']['user_wallet']);
@@ -106,6 +101,40 @@ Future getFilesCategoriesFromAPI() async {
     if (decode['statusMsg'] == "AVAILABLE") {
       vrBox!.put("fileCategories", decode['data']);
       return decode['data'];
+    } else {
+      return "FAILED";
+    }
+  } else {
+    return "NO_CONNECTION";
+  }
+}
+
+Future getFeeds() async {
+  var res = await http
+      .post(Uri.parse(ROOT_URL + "/getFeeds.php"), body: {"api": API_KEY});
+
+  if (res.statusCode == 200) {
+    var decode = json.decode(res.body);
+    if (decode['statusMsg'] == "AVAILABLE") {
+      mainBox!.put("feeds", decode['data']);
+      return decode['data'];
+    } else {
+      return "FAILED";
+    }
+  } else {
+    return "NO_CONNECTION";
+  }
+}
+
+Future getUtils() async {
+  var res = await http
+      .post(Uri.parse(ROOT_URL + "/getUtilsData.php"), body: {"api": API_KEY});
+
+  if (res.statusCode == 200) {
+    var decode = json.decode(res.body);
+    if (decode['statusMsg'] == "AVAILABLE") {
+      mainBox!.put("utils", decode['data']);
+      return "SUCCESS";
     } else {
       return "FAILED";
     }

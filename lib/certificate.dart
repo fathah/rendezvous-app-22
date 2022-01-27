@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:rendezvous/inc/strings.dart';
 import 'inc/common.dart';
 
+// ignore: must_be_immutable
 class Certificate extends StatefulWidget {
   String? comp;
   int? rank;
@@ -96,7 +97,7 @@ class _CertificateState extends State<Certificate> {
             ],
           ),
           br(20),
-          FlatButton(
+          TextButton(
               onPressed: () {
                 editImage(dir!);
               },

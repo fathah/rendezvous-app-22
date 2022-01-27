@@ -86,7 +86,7 @@ class _WatchState extends State<Watch> {
                             width: Get.width * 0.4,
                             child: CachedNetworkImage(
                               imageUrl:
-                                  "https://img.youtube.com/vi/${youtubeId}/0.jpg",
+                                  "https://img.youtube.com/vi/$youtubeId/0.jpg",
                               imageBuilder: (context, imageProvider) =>
                                   Container(
                                 decoration: BoxDecoration(

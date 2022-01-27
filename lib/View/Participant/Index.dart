@@ -27,10 +27,12 @@ class _ParticipantHomeIndexState extends State<ParticipantHomeIndex> {
     await getJSONFromAPI("students").then((value) {
       for (var data in value) {
         if (data['card'] == cardNo) {
+          print("Data is $data");
           mainBox!.put('team', data['team']);
           mainBox!.put('section', data['section']);
           mainBox!.put('campus', data['campus']);
           mainBox!.put('programList', data['programList']);
+          mainBox!.put('indPoint', data['indPoint']);
         }
       }
     });
@@ -38,6 +40,7 @@ class _ParticipantHomeIndexState extends State<ParticipantHomeIndex> {
     await getUserDataFromAPI(cardNo);
     await getTransactionFromAPI();
     await getProgramsFromAPI();
+    await getUtils();
   }
 
   @override

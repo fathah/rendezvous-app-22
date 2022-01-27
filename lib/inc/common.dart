@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:rendezvous/Functions/login.dart';
 import 'package:rendezvous/View/Home/Home.dart';
 import 'package:rendezvous/inc/Constants.dart';
-import 'package:rendezvous/inc/transition.dart';
-import 'package:rendezvous/scan.dart';
 
 import 'strings.dart';
 
@@ -52,7 +51,7 @@ logout(context) async {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  OutlineButton(
+                  OutlinedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -66,10 +65,12 @@ logout(context) async {
                   ),
                   OutlineButton(
                     highlightedBorderColor: Colors.red,
-                    onPressed: () {
-                      mainBox!.clear();
-                      vrBox!.clear();
-                      Get.offAll(Home());
+                    onPressed: () async {
+                      await logoutUser().then((value) {
+                        mainBox!.clear();
+                        vrBox!.clear();
+                        Get.offAll(Home());
+                      });
                     },
                     child: Text(
                       "Logout",
@@ -88,13 +89,13 @@ logout(context) async {
 Color getThemeColor(team) {
   switch (team) {
     case 'nn':
-      return teamRed;
+      return teamBlue;
 
     case 'be':
-      return teamGreen;
+      return teamRed;
 
     case 'is':
-      return teamBlue;
+      return teamGreen;
 
     default:
       return mainColor;
@@ -138,7 +139,7 @@ String getSection(sec) {
     case 'jr':
       return "Junior";
 
-    case 'sr':
+    case 'sn':
       return "Senior";
 
     case 'gn':
@@ -146,5 +147,31 @@ String getSection(sec) {
 
     default:
       return "Unknown";
+  }
+}
+
+Color getNotifColor(type) {
+  switch (type) {
+    case "Alert":
+      return Color(0xff3498db);
+    case "Notice":
+      return Color(0xff8e44ad);
+    case "Warning":
+      return Color(0xffe74c3c);
+    default:
+      return Color(0xfff39c12);
+  }
+}
+
+IconData getNotifIcon(type) {
+  switch (type) {
+    case "Alert":
+      return Icons.info_outline_rounded;
+    case "Notice":
+      return Icons.event_note_rounded;
+    case "Warning":
+      return Icons.warning_amber;
+    default:
+      return Icons.notifications_none;
   }
 }

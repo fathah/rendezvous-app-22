@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rendezvous/inc/Constants.dart';
 
-import 'getAPIData.dart';
-
 Future<String> loginFromAPI(cardId, token) async {
   var res = await http.post(Uri.parse(ROOT_URL + "/getUserdata.php"),
       body: {"api": API_KEY, "userid": cardId});
@@ -24,6 +22,23 @@ Future<String> loginFromAPI(cardId, token) async {
         "deviceId": token
       });
 
+      return "SUCCESS";
+    } else {
+      return "FAILED";
+    }
+  } else {
+    return "NO_CONNECTION";
+  }
+}
+
+Future logoutUser() async {
+  var res = await http.post(Uri.parse(ROOT_URL + "/logout.php"),
+      body: {"api": API_KEY, 'userid': mainBox!.get("userId")});
+
+  if (res.statusCode == 200) {
+    var decode = json.decode(res.body);
+    print(decode);
+    if (decode['statusMsg'] == "LOGGEDOUT") {
       return "SUCCESS";
     } else {
       return "FAILED";

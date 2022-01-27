@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rendezvous/Components/AdCarosal.dart';
 import 'package:rendezvous/Components/Programs.dart';
-import 'package:rendezvous/Functions/Notification.dart';
+import 'package:rendezvous/Components/SetPin.dart';
 import 'package:rendezvous/View/GlocalCoin/GlocalCoin.dart';
 import 'package:rendezvous/View/MainMenu/Gallery/Gallery.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/GlocalPay.dart';
 import 'package:rendezvous/View/MainMenu/GlocalVR/GlocalVR.dart';
+import 'package:rendezvous/View/MainMenu/Notifications/Notifications.dart';
+import 'package:rendezvous/View/MainMenu/Programs/Programs.dart';
 import 'package:rendezvous/View/MainMenu/Result/Results.dart';
 import 'package:rendezvous/View/MainMenu/Scan/Scan.dart';
+import 'package:rendezvous/View/MainMenu/Topics/Topics.dart';
 import 'package:rendezvous/View/MainMenu/Watch/Watch.dart';
 import 'package:rendezvous/chart.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
-class ParticipantHome extends StatelessWidget {
+class ParticipantHome extends StatefulWidget {
   const ParticipantHome({Key? key}) : super(key: key);
 
+  @override
+  _ParticipantHomeState createState() => _ParticipantHomeState();
+}
+
+class _ParticipantHomeState extends State<ParticipantHome> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,7 +72,7 @@ class ParticipantHome extends StatelessWidget {
                               Text(
                                 mainBox!.get('userName') ?? " ",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -107,6 +115,15 @@ class ParticipantHome extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
+                        br(5),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                                'Individual Score: ${mainBox!.get('indPoint') ?? "0"}',
+                                style: TextStyle(color: Colors.white)),
+                          ],
+                        )
                       ],
                     )),
                 Container(
@@ -167,13 +184,35 @@ class ParticipantHome extends StatelessWidget {
                           ),
                         ],
                       ),
+                      br(30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          topRowItem(
+                            "programs",
+                            'Programs',
+                          ),
+                          topRowItem(
+                            "topics",
+                            'Topics',
+                          ),
+                          topRowItem(
+                            "notification",
+                            'Notifications',
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-            br(20),
+            br(10),
+            mainBox!.get('pin') != null && mainBox!.get('pin').length > 0
+                ? br(0)
+                : SetPINNotice(),
             AdCarosal(),
+            br(5),
             Container(
                 padding: EdgeInsets.symmetric(vertical: 25),
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -237,6 +276,15 @@ class ParticipantHome extends StatelessWidget {
                     break;
                   case "gallery":
                     Get.to(Gallery());
+                    break;
+                  case "programs":
+                    Get.to(Programs());
+                    break;
+                  case "topics":
+                    Get.to(Topics());
+                    break;
+                  case "notification":
+                    Get.to(Notifications());
                     break;
                   default:
                     Get.to(ScanQR());

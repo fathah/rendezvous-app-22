@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rendezvous/Components/NumKeyPad.dart';
-import 'package:rendezvous/Functions/glocalPayFunctions.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/PIN.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/Transfering.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
+// ignore: must_be_immutable
 class SendMoney extends StatefulWidget {
   String? amount;
   var receiverData;

@@ -8,6 +8,7 @@ import 'package:rendezvous/View/Participant/Index.dart';
 import 'package:rendezvous/inc/Constants.dart';
 import 'package:rendezvous/inc/strings.dart';
 
+// ignore: must_be_immutable
 class EnterPIN extends StatefulWidget {
   String amount;
   String receiver;

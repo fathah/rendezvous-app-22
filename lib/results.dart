@@ -7,6 +7,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 import 'inc/strings.dart';
 
+// ignore: must_be_immutable
 class WebPage extends StatefulWidget {
   String? link;
   String? title;

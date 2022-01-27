@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    Timer(Duration(milliseconds: 500), () {
+    Timer(Duration(milliseconds: 3000), () {
       if (mainBox!.get("userId") != null && mainBox!.get("cardNo") != null) {
         Navigator.of(context)
             .pushReplacement(FadeRoute(page: ParticipantHomeIndex()));

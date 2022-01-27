@@ -22,7 +22,7 @@ class YoutubePlay extends StatelessWidget {
               initialVideoId: ytId,
               flags: YoutubePlayerFlags(
                 autoPlay: true,
-                mute: true,
+                mute: false,
               ),
             ),
             showVideoProgressIndicator: true,

@@ -6,14 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:rendezvous/Functions/glocalPayFunctions.dart';
 import 'package:rendezvous/Functions/login.dart';
-import 'package:rendezvous/View/MainMenu/GlocalPay/GlocalPay.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/SendMoney.dart';
+import 'package:rendezvous/View/MainMenu/GlocalVR/ConfirmTicket.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
+// ignore: must_be_immutable
 class ScanQR extends StatefulWidget {
   bool isLogin = false;
-  ScanQR({Key? key, this.isLogin = false}) : super(key: key);
+  bool isVR = false;
+  ScanQR({Key? key, this.isLogin = false, this.isVR = false}) : super(key: key);
 
   @override
   _ScanQRState createState() => _ScanQRState();
@@ -56,7 +58,8 @@ class _ScanQRState extends State<ScanQR> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (widget.isLogin) {
-        if (!scanData.code!.contains("@rendezvous")) {
+        if (!scanData.code!.contains("@jamiamadeenathunnoor") &&
+            !scanData.code!.contains("JM")) {
           setState(() {
             resp =
                 "This QR code is invalid in Rendezvous/Glocal Media. Please scan the code available in your ID card.";
@@ -85,41 +88,76 @@ class _ScanQRState extends State<ScanQR> {
           });
         }
       } else {
-        if (scanData.code!.contains("@glocalpay")) {
-          setState(() {
-            resp = "Checking if the user is available in Glocal Pay";
-            loading = true;
-          });
-          String cardId = scanData.code!.split("@")[0];
-          checkGlocalPayUser(cardId).then((value) {
-            if (value == "NO_CONNECTION") {
-              setState(() {
-                resp = "Oops. Please check your connection.";
-                loading = false;
-              });
-            } else if (value == "NOT_AVAILABLE") {
-              setState(() {
-                resp = "This user is not available in Glocal Pay.";
-                loading = false;
-              });
-            } else {
-              setState(() {
-                resp = "Taking to Glocal Pay.";
-                loading = false;
-              });
-              numKeyBox!.put('num', "0");
-              Navigator.pop(context);
-              Get.to(SendMoney(
-                receiverData: value,
-              ));
-            }
-          });
+        if (widget.isVR) {
+          if (scanData.code!.contains("@jamiamadeenathunnoor")) {
+            String cardId = scanData.code!.split("@")[0];
+            checkGlocalPayUser(cardId).then((value) {
+              if (value == "NO_CONNECTION") {
+                setState(() {
+                  resp = "Oops. Please check your connection.";
+                  loading = false;
+                });
+              } else if (value == "NOT_AVAILABLE") {
+                setState(() {
+                  resp = "Couldn't get this user.";
+                  loading = false;
+                });
+              } else {
+                setState(() {
+                  resp = "Things getting ready...";
+                  loading = false;
+                });
+
+                Navigator.pop(context);
+                Get.to(ConfirmTicket(
+                  receiverData: value,
+                ));
+              }
+            });
+          } else {
+            setState(() {
+              resp =
+                  "This QR code is invalid in Rendezvous/Glocal Media. Please scan the code available in your ID card.";
+              loading = false;
+            });
+          }
         } else {
-          setState(() {
-            resp =
-                "This QR code is not supported in Rendezvous/Glocal Media protocols.";
-            loading = false;
-          });
+          if (scanData.code!.contains("@glocalpay")) {
+            setState(() {
+              resp = "Checking if the user is available in Glocal Pay";
+              loading = true;
+            });
+            String cardId = scanData.code!.split("@")[0];
+            checkGlocalPayUser(cardId).then((value) {
+              if (value == "NO_CONNECTION") {
+                setState(() {
+                  resp = "Oops. Please check your connection.";
+                  loading = false;
+                });
+              } else if (value == "NOT_AVAILABLE") {
+                setState(() {
+                  resp = "This user is not available in Glocal Pay.";
+                  loading = false;
+                });
+              } else {
+                setState(() {
+                  resp = "Taking to Glocal Pay.";
+                  loading = false;
+                });
+                numKeyBox!.put('num', "0");
+                Navigator.pop(context);
+                Get.to(SendMoney(
+                  receiverData: value,
+                ));
+              }
+            });
+          } else {
+            setState(() {
+              resp =
+                  "This QR code is not supported in Rendezvous/Glocal Media protocols.";
+              loading = false;
+            });
+          }
         }
       }
     });

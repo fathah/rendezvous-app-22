@@ -2,17 +2,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rendezvous/inc/Constants.dart';
 
-Future<String> d() async {
-  var res = await http.post(Uri.parse(ROOT_URL + "/getVRdata.php"), body: {
+Future<String> registerVR(entryUserId) async {
+  var res = await http.post(Uri.parse(ROOT_URL + "/registerVR.php"), body: {
     "api": API_KEY,
-    "userid": mainBox!.get("userId"),
-    "wallet": mainBox!.get("walletBalance"),
-    "pin": mainBox!.get("pin")
+    "userid": entryUserId,
+    "registrarid": mainBox!.get("userId"),
   });
 
   if (res.statusCode == 200) {
     var decode = json.decode(res.body);
-    if (decode['statusMsg'] == "USERDATAUPDATED") {
+    if (decode['statusMsg'] == "DONE") {
       return "SUCCESS";
     } else {
       return "FAILED";

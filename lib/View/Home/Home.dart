@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:rendezvous/Components/modals.dart';
+import 'package:rendezvous/Functions/getAPIData.dart';
+import 'package:rendezvous/View/Guest/Guest.dart';
 import 'package:rendezvous/View/MainMenu/Scan/Scan.dart';
 import 'package:rendezvous/inc/Constants.dart';
 import 'package:rendezvous/inc/strings.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    getProgramsFromAPI();
+    getFilesFromAPI();
+    getUtils();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +44,9 @@ class Home extends StatelessWidget {
                 )),
             br(10),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(GuestHome());
+                },
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
