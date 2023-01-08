@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
 
 Future saveJSON(File file, String json) async {
   String url = "https://manzilmedia.net/apps/rendezvous/getJSON.php?file=";
@@ -20,37 +21,9 @@ Future getJSON(File file) async {
   return json.decode(response);
 }
 
-Future getJSONFromAPI(String fileType) async {
-  String url =
-      "https://manzilmedia.net/apps/rendezvous/getJSON.php?file=$fileType";
-  final response = await http.get(Uri.parse(url));
-  return json.decode(response.body);
-}
-
-Future<String> getUserDataFromAPI(cardId) async {
-  var res = await http.post(Uri.parse(ROOT_URL + "/getUserdata.php"),
-      body: {"api": API_KEY, "userid": cardId});
-
-  if (res.statusCode == 200) {
-    var decode = json.decode(res.body);
-
-    if (decode['statusMsg'] == "AVAILABLE") {
-      mainBox!.put("userName", decode['data']['user_name']);
-      mainBox!.put("walletBalance", decode['data']['user_wallet']);
-      mainBox!.put("userType", decode['data']['user_type']);
-      mainBox!.put("pin", decode['data']['user_pin']);
-      return "SUCCESS";
-    } else {
-      return "FAILED";
-    }
-  } else {
-    return "NO_CONNECTION";
-  }
-}
-
 Future getTransactionFromAPI() async {
   var res = await http.post(Uri.parse(ROOT_URL + "/getTransactions.php"),
-      body: {"api": API_KEY, "userid": mainBox!.get('userId')});
+      body: {"api": API_KEY, "userid": mainBox!.get(DBKeys.userId)});
 
   if (res.statusCode == 200) {
     var decode = json.decode(res.body);
@@ -63,16 +36,6 @@ Future getTransactionFromAPI() async {
   } else {
     return "NO_CONNECTION";
   }
-}
-
-Future getProgramsFromAPI() async {
-  var program = await getJSONFromAPI('program');
-  var programList = await getJSONFromAPI('programlist');
-  var teamScore = await getJSONFromAPI('teamScore');
-
-  programBox!.put("programs", program);
-  programBox!.put("programList", programList);
-  mainBox!.put("teamScore", teamScore);
 }
 
 Future getFilesFromAPI() async {
@@ -126,19 +89,3 @@ Future getFeeds() async {
   }
 }
 
-Future getUtils() async {
-  var res = await http
-      .post(Uri.parse(ROOT_URL + "/getUtilsData.php"), body: {"api": API_KEY});
-
-  if (res.statusCode == 200) {
-    var decode = json.decode(res.body);
-    if (decode['statusMsg'] == "AVAILABLE") {
-      mainBox!.put("utils", decode['data']);
-      return "SUCCESS";
-    } else {
-      return "FAILED";
-    }
-  } else {
-    return "NO_CONNECTION";
-  }
-}

@@ -161,26 +161,8 @@ class _ParticipantHomeState extends State<ParticipantHome> {
                             'Glocal Pay',
                           ),
                           topRowItem(
-                            "vr",
-                            'Glocal VR',
-                          ),
-                        ],
-                      ),
-                      br(30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          topRowItem(
                             "result",
                             'Results',
-                          ),
-                          topRowItem(
-                            "watch",
-                            'Watch',
-                          ),
-                          topRowItem(
-                            "gallery",
-                            'Gallery',
                           ),
                         ],
                       ),
@@ -193,12 +175,12 @@ class _ParticipantHomeState extends State<ParticipantHome> {
                             'Programs',
                           ),
                           topRowItem(
-                            "topics",
-                            'Topics',
-                          ),
-                          topRowItem(
                             "notification",
                             'Notifications',
+                          ),
+                          topRowItem(
+                            "watch",
+                            'Watch',
                           ),
                         ],
                       ),

@@ -4,7 +4,15 @@ import 'package:rendezvous/View/Home/Panel.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/GlocalPay.dart';
 import 'package:rendezvous/View/MainMenu/Result/Results.dart';
 import 'package:rendezvous/View/Participant/Participant.dart';
+import 'package:rendezvous/api/get_all_participation.dart';
+import 'package:rendezvous/api/get_all_students.dart';
+import 'package:rendezvous/api/get_participation.dart';
+import 'package:rendezvous/api/get_programs.dart';
+import 'package:rendezvous/api/get_teams.dart';
+import 'package:rendezvous/api/utils_get.dart';
 import 'package:rendezvous/inc/Constants.dart';
+
+import '../../api/get_user_data.dart';
 
 class ParticipantHomeIndex extends StatefulWidget {
   @override
@@ -21,31 +29,22 @@ class _ParticipantHomeIndexState extends State<ParticipantHomeIndex> {
     Panel(),
   ];
 
-  getUserData() async {
-    String cardNo = mainBox!.get('cardNo');
+  getInitialData() async {
+    await getAllStudents();
+    await getUserData();
+    await getParticipation();
 
-    await getJSONFromAPI("students").then((value) {
-      for (var data in value) {
-        if (data['card'] == cardNo) {
-          print("Data is $data");
-          mainBox!.put('team', data['team']);
-          mainBox!.put('section', data['section']);
-          mainBox!.put('campus', data['campus']);
-          mainBox!.put('programList', data['programList']);
-          mainBox!.put('indPoint', data['indPoint']);
-        }
-      }
-    });
-
-    await getUserDataFromAPI(cardNo);
+    await getTeams();
+    await getPrograms();
     await getTransactionFromAPI();
-    await getProgramsFromAPI();
+
+    await getAllParticipations();
     await getUtils();
   }
 
   @override
   void initState() {
-    getUserData();
+    getInitialData();
     super.initState();
   }
 

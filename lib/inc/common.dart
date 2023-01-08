@@ -63,8 +63,10 @@ logout(context) async {
                   SizedBox(
                     width: 30,
                   ),
-                  OutlineButton(
-                    highlightedBorderColor: Colors.red,
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
                     onPressed: () async {
                       await logoutUser().then((value) {
                         mainBox!.clear();
@@ -74,7 +76,7 @@ logout(context) async {
                     },
                     child: Text(
                       "Logout",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Colors.white),
                     ),
                   )
                 ],
@@ -127,22 +129,21 @@ Future downloadCertificate() async {
 
 String getSection(sec) {
   switch (sec) {
-    case 'pr':
-      return "Primary";
+    case 'minor':
+      return "Minor";
+    case 'premier':
+      return "Premier";
 
-    case 'sc':
-      return "Secondary";
-
-    case 'sj':
+    case 'subjunior':
       return "Sub Junior";
 
-    case 'jr':
+    case 'junior':
       return "Junior";
 
-    case 'sn':
+    case 'senior':
       return "Senior";
 
-    case 'gn':
+    case 'general':
       return "General";
 
     default:

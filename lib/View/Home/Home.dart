@@ -3,8 +3,15 @@ import 'package:rendezvous/Components/modals.dart';
 import 'package:rendezvous/Functions/getAPIData.dart';
 import 'package:rendezvous/View/Guest/Guest.dart';
 import 'package:rendezvous/View/MainMenu/Scan/Scan.dart';
+import 'package:rendezvous/api/get_programs.dart';
+import 'package:rendezvous/api/utils_get.dart';
 import 'package:rendezvous/inc/Constants.dart';
-import 'package:rendezvous/inc/strings.dart';
+
+Future getInitialData() async {
+  await getPrograms();
+  await getFilesFromAPI();
+  await getUtils();
+}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -16,9 +23,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   void initState() {
-    getProgramsFromAPI();
-    getFilesFromAPI();
-    getUtils();
+    getInitialData();
     super.initState();
   }
 
@@ -55,6 +60,7 @@ class _HomeState extends State<Home> {
             br(10),
             ElevatedButton(
                 onPressed: () {
+                  //Get.to(ParticipantHomeIndex());
                   Get.to(ScanQR(
                     isLogin: true,
                   ));
@@ -71,6 +77,14 @@ class _HomeState extends State<Home> {
                       "Please contact the support team to get assisted.");
                 },
                 child: Text("Having problem to login?")),
+            // ElevatedButton(
+            //     onPressed: () {
+            //       FirebaseMessaging messaging = FirebaseMessaging.instance;
+            //       messaging.getToken().then((token) {
+            //         loginFromAPI("2016JM002", token);
+            //       });
+            //     },
+            //     child: Text("Login"))
           ],
         ),
         Positioned(

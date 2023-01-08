@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rendezvous/Functions/getAPIData.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
+import 'package:rendezvous/api/get_user_data.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
 // ignore: must_be_immutable
@@ -17,7 +18,7 @@ class _PaymentSuccessState extends State<PaymentSuccess> {
   @override
   void initState() {
     super.initState();
-    getUserDataFromAPI(mainBox!.get('cardNo'));
+    getUserData();
     numKeyBox!.put('num', "");
   }
 

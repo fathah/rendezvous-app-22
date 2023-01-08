@@ -5,7 +5,7 @@ description: A new Flutter project.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.42.0+6
+version: 5.01.1+8
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -44,7 +44,9 @@ dependencies:
   youtube_player_flutter:
   dio:
   wifi_connector: ^2.0.0
+  permission_handler: ^10.2.0
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

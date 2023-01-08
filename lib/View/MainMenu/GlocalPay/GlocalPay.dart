@@ -103,7 +103,7 @@ class GlocalPay extends StatelessWidget {
                             fontSize: 20,
                           )),
                       brw(20),
-                      Text("03/22", style: TextStyle(color: Colors.black))
+                      Text("03/23", style: TextStyle(color: Colors.black))
                     ],
                   ),
                   br(5),

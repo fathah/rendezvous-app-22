@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:rendezvous/Functions/getAPIData.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:rendezvous/api/notifications_get.dart';
 import 'package:rendezvous/inc/Constants.dart';
 import 'package:rendezvous/inc/common.dart';
+import 'package:rendezvous/models/db.dart';
 
-class Notifications extends StatefulWidget {
-  const Notifications({Key? key}) : super(key: key);
-
-  @override
-  _NotificationsState createState() => _NotificationsState();
-}
-
-class _NotificationsState extends State<Notifications> {
-  List notifs = [];
-  @override
-  void initState() {
-    if (mainBox!.get('feeds') != null) {
-      setState(() {
-        notifs = mainBox!.get('feeds').reversed.toList();
-      });
-    }
-    getFeeds().then((value) {
-      setState(() => notifs = value.reversed.toList());
-    });
-    super.initState();
-  }
+class Notifications extends StatelessWidget {
+  Notifications({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      getNotifications();
+      var status = await Permission.notification.status;
+      if (status.isDenied) {
+        await Permission.notification.request();
+      }
+    });
+    List notifs = mainBox!.get(DBKeys.notifications) ?? [];
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
@@ -51,9 +43,10 @@ class _NotificationsState extends State<Notifications> {
                         ),
                       ),
                       child: ListTile(
-                        title: Text(notifs[index]['feed_body']),
-                        leading: Icon(getNotifIcon(notifs[index]['feed_type']),
-                            color: getNotifColor(notifs[index]['feed_type'])),
+                        title: Text(notifs[index]['title']),
+                        subtitle: Text(notifs[index]['body']),
+                        leading: Icon(getNotifIcon(notifs[index]['notifType']),
+                            color: getNotifColor(notifs[index]['notifType'])),
                       ),
                     ),
                   ),

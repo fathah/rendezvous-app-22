@@ -10,6 +10,7 @@ import 'package:rendezvous/View/MainMenu/GlocalPay/SendMoney.dart';
 import 'package:rendezvous/View/MainMenu/GlocalVR/ConfirmTicket.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
 
 // ignore: must_be_immutable
 class ScanQR extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ScanQRState extends State<ScanQR> {
   void initState() {
     super.initState();
     //NOTIFICATION INITIALIZATION
-    if (mainBox!.get('userId') == null || mainBox!.get('cardNo') == null) {
+    if (mainBox!.get(DBKeys.userId) == null || mainBox!.get(DBKeys.cardNo) == null) {
       messaging = FirebaseMessaging.instance;
       messaging.getToken().then((value) {
         setState(() {
@@ -58,7 +59,7 @@ class _ScanQRState extends State<ScanQR> {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
       if (widget.isLogin) {
-        if (!scanData.code!.contains("@jamiamadeenathunnoor") &&
+        if (!scanData.code!.contains("@jamiamadeenathunnoor") ||
             !scanData.code!.contains("JM")) {
           setState(() {
             resp =

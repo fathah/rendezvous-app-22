@@ -74,7 +74,7 @@ class GlocalCoin extends StatelessWidget {
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(MAIN_GREEN)),
                   onPressed: () {
-                    launch("https://glocalmedia.tech/rendezvous/gcscan");
+                    launchUrl(Uri.parse("https://glocal.markazgarden.org/rendezvous/gcscan"));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(

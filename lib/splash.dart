@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
+import 'package:rendezvous/api/get_teams.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
 import 'Functions/getAPIData.dart';
@@ -28,7 +29,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-
+    
     Timer(Duration(milliseconds: 3000), () {
       if (mainBox!.get("userId") != null && mainBox!.get("cardNo") != null) {
         Navigator.of(context)

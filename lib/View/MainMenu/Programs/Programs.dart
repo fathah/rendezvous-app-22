@@ -6,7 +6,7 @@ import 'package:rendezvous/inc/common.dart';
 // ignore: must_be_immutable
 class Programs extends StatelessWidget {
   Programs({Key? key}) : super(key: key);
-  List programs = programBox!.get('programs') ?? [];
+  List programs = programBox!.values.toList();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

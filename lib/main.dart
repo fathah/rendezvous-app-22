@@ -21,6 +21,9 @@ void main() async {
   programBox = await Hive.openBox('programBox');
   numKeyBox = await Hive.openBox('numKeyBox');
   vrBox = await Hive.openBox('vrBox');
+    studentsBox = await Hive.openBox('studentsBox');
+
+  participationBox = await Hive.openBox('participationBox');
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

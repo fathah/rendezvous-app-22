@@ -26,7 +26,8 @@ class AdCarosal extends StatelessWidget {
       height: 130,
       width: double.infinity,
       child: CachedNetworkImage(
-        imageUrl: adUrl ?? "https://manzilmedia.net/apps/rendezvous/ad.jpg",
+        imageUrl: adUrl ??
+            "https://api.jamiamadeenathunnoor.org/rendezvous/oldApi/ad.jpg",
         fit: BoxFit.cover,
         imageBuilder: (context, imageProvider) => Container(
           decoration: BoxDecoration(
