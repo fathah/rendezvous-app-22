@@ -15,6 +15,7 @@ import 'package:rendezvous/View/MainMenu/Topics/Topics.dart';
 import 'package:rendezvous/View/MainMenu/Watch/Watch.dart';
 import 'package:rendezvous/chart.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
 
 class ParticipantHome extends StatefulWidget {
   const ParticipantHome({Key? key}) : super(key: key);
@@ -59,7 +60,7 @@ class _ParticipantHomeState extends State<ParticipantHome> {
                   ),
                 ),
                 Positioned(
-                    top: Get.height * 0.05,
+                    top: Get.height * 0.07,
                     left: Get.width * 0.06,
                     right: Get.width * 0.06,
                     child: Column(
@@ -96,7 +97,7 @@ class _ParticipantHomeState extends State<ParticipantHome> {
                                       ),
                                       brw(5),
                                       Text(
-                                        '${mainBox!.get('walletBalance') ?? "0"}',
+                                        '${mainBox!.get(DBKeys.walletBalance, defaultValue: "0")}',
                                         style: TextStyle(
                                           color: Colors.white,
                                         ),
@@ -128,7 +129,7 @@ class _ParticipantHomeState extends State<ParticipantHome> {
                     )),
                 Container(
                   margin: EdgeInsets.only(
-                    top: Get.height * 0.18,
+                    top: Get.height * 0.19,
                     left: Get.width * 0.05,
                     right: Get.width * 0.05,
                   ),

@@ -6,12 +6,13 @@ import 'package:rendezvous/inc/common.dart';
 
 class Results extends StatelessWidget {
   Results({Key? key}) : super(key: key);
-  List programs = programBox!.values.toList();
 
   @override
   Widget build(BuildContext context) {
+    List programs = programBox!.values.toList();
     programs.sort((a, b) {
-      return int.parse(a['id']).compareTo(int.parse(b['id']));
+      return (int.parse(b['resultDeclared'] ?? "0"))
+          .compareTo(int.parse(a['resultDeclared'] ?? "0"));
     });
     return Scaffold(
       appBar: AppBar(
@@ -60,16 +61,6 @@ resultModal(Map program) {
     print("Declared");
     partis.forEach((prs) {
       if (int.parse("${prs['rank']}") != 0) {
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
-        finalResults.add(prs);
         finalResults.add(prs);
       }
     });

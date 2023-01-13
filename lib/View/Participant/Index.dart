@@ -30,14 +30,12 @@ class _ParticipantHomeIndexState extends State<ParticipantHomeIndex> {
   ];
 
   getInitialData() async {
-    await getAllStudents();
     await getUserData();
     await getParticipation();
-
+    await getAllStudents();
     await getTeams();
     await getPrograms();
     await getTransactionFromAPI();
-
     await getAllParticipations();
     await getUtils();
   }

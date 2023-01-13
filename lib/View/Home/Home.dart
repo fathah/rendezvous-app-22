@@ -7,6 +7,8 @@ import 'package:rendezvous/api/get_programs.dart';
 import 'package:rendezvous/api/utils_get.dart';
 import 'package:rendezvous/inc/Constants.dart';
 
+import '../../models/db.dart';
+
 Future getInitialData() async {
   await getPrograms();
   await getFilesFromAPI();
@@ -29,6 +31,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    mainBox!.put(DBKeys.userId, "2636");
+    mainBox!.put(DBKeys.cardNo, "2016JM016");
+
     return Scaffold(
         body: Stack(
       children: [

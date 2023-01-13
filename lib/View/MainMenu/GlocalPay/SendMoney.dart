@@ -41,7 +41,7 @@ class _SendMoneyState extends State<SendMoney> {
                     ),
                     br(10),
                     Text(
-                      "${widget.receiverData['user_name']}",
+                      "${widget.receiverData['name']}",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),
                     br(10),
@@ -51,7 +51,7 @@ class _SendMoneyState extends State<SendMoney> {
                           borderRadius: BorderRadius.circular(30),
                           color: Colors.white30),
                       child: Text(
-                        "${widget.receiverData['user_card_no']}@glocalpay",
+                        "${widget.receiverData['jamiaId']}@glocalpay",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -196,7 +196,7 @@ class _SendMoneyState extends State<SendMoney> {
                 ]),
                 br(5),
                 Text(
-                  "${widget.receiverData['user_name']}",
+                  "${widget.receiverData['name']}",
                   style: TextStyle(fontSize: 20, color: MAIN_ORANGE),
                 ),
                 br(10),
@@ -206,7 +206,7 @@ class _SendMoneyState extends State<SendMoney> {
                       borderRadius: BorderRadius.circular(30),
                       color: Colors.black12),
                   child: Text(
-                    "${widget.receiverData['user_card_no']}@glocalpay",
+                    "${widget.receiverData['jamiaId']}@glocalpay",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
@@ -219,7 +219,7 @@ class _SendMoneyState extends State<SendMoney> {
                       Navigator.pop(context);
                       Get.to(EnterPIN(
                         amount: numb,
-                        receiver: widget.receiverData['user_id'],
+                        receiver: widget.receiverData['id'],
                         remark: remarks,
                       ));
                     },

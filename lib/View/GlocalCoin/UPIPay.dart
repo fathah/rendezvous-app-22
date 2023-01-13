@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:rendezvous/Functions/glocalPayFunctions.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
+import 'package:rendezvous/models/glocal_coin.dart';
 
 class Payment extends StatefulWidget {
   @override
@@ -106,17 +108,15 @@ class _PaymentState extends State<Payment> {
   void _handlePaymentSuccess(PaymentSuccessResponse response) async {
     Get.back();
     int currentAmount = int.parse(numKeyBox!.get("amount")) +
-        int.parse(mainBox!.get("walletBalance"));
-    mainBox!.put("walletBalance", currentAmount.toString());
+        int.parse(mainBox!.get(DBKeys.walletBalance));
+    mainBox!.put(DBKeys.walletBalance, currentAmount.toString());
     snackBar(
       title: "Payment Successful",
       body: "You have successfully bought Glocal Coin. ",
     );
     await updateUserWallet().then((value) async {
-      await newTransaction(mainBox!.get('userId'), numKeyBox!.get("amount"),
-          sender: "3",
-          remarks: "Bought Glocal Coin",
-          reference: "${response.paymentId}");
+      await GCTransaction().newTransaction(mainBox!.get(DBKeys.userId),
+          currentAmount.toString(), 'Buy Glocal Coin');
     });
   }
 

@@ -6,10 +6,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rendezvous/Components/GeometryContainer.dart';
 import 'package:rendezvous/Functions/getAPIData.dart';
+import 'package:rendezvous/Functions/students/get_name.dart';
 import 'package:rendezvous/View/MainMenu/Scan/Scan.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
 
 Future getTransactions() async {
+  getTransactionFromAPI();
   if (mainBox!.get("transactions") != null) {
     return mainBox!.get("transactions");
   } else {
@@ -29,6 +32,9 @@ class GlocalPay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    studentsBox!.values.forEach((element) {
+      print(element);
+    });
     return Scaffold(
         body: SingleChildScrollView(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -211,8 +217,8 @@ class GlocalPay extends StatelessWidget {
                       reverse: true,
                       itemCount: data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        bool isSender =
-                            data[index]['senderId'] == mainBox!.get('userId');
+                        bool isSender = data[index]['fromId'] ==
+                            mainBox!.get(DBKeys.userId);
                         return Container(
                           padding: EdgeInsets.symmetric(vertical: 5),
                           decoration: BoxDecoration(
@@ -228,14 +234,18 @@ class GlocalPay extends StatelessWidget {
                               transactionDetails(context, data[index]);
                             },
                             leading: CircleAvatar(
-                                backgroundColor: MAIN_ORANGE.withOpacity(0.2),
+                                backgroundColor: isSender
+                                    ? Colors.red[100]
+                                    : Colors.green[100],
                                 child: Icon(
                                   Icons.payment_outlined,
-                                  color: MAIN_ORANGE,
+                                  color: isSender
+                                      ? Colors.red[700]
+                                      : Colors.green[700],
                                 )),
                             title: Text(isSender
-                                ? data[index]['receiverName'] ?? ""
-                                : data[index]['senderName'] ?? ""),
+                                ? getStudentName(data[index]['toId'])
+                                : getStudentName(data[index]['fromId'])),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,

@@ -35,7 +35,8 @@ class _ScanQRState extends State<ScanQR> {
   void initState() {
     super.initState();
     //NOTIFICATION INITIALIZATION
-    if (mainBox!.get(DBKeys.userId) == null || mainBox!.get(DBKeys.cardNo) == null) {
+    if (mainBox!.get(DBKeys.userId) == null ||
+        mainBox!.get(DBKeys.cardNo) == null) {
       messaging = FirebaseMessaging.instance;
       messaging.getToken().then((value) {
         setState(() {
@@ -92,13 +93,8 @@ class _ScanQRState extends State<ScanQR> {
         if (widget.isVR) {
           if (scanData.code!.contains("@jamiamadeenathunnoor")) {
             String cardId = scanData.code!.split("@")[0];
-            checkGlocalPayUser(cardId).then((value) {
-              if (value == "NO_CONNECTION") {
-                setState(() {
-                  resp = "Oops. Please check your connection.";
-                  loading = false;
-                });
-              } else if (value == "NOT_AVAILABLE") {
+            Map recUser = checkGlocalPayUser(cardId);
+               if (!recUser.containsKey("jamiaId")) {
                 setState(() {
                   resp = "Couldn't get this user.";
                   loading = false;
@@ -111,10 +107,10 @@ class _ScanQRState extends State<ScanQR> {
 
                 Navigator.pop(context);
                 Get.to(ConfirmTicket(
-                  receiverData: value,
+                  receiverData: recUser,
                 ));
               }
-            });
+           
           } else {
             setState(() {
               resp =
@@ -129,13 +125,9 @@ class _ScanQRState extends State<ScanQR> {
               loading = true;
             });
             String cardId = scanData.code!.split("@")[0];
-            checkGlocalPayUser(cardId).then((value) {
-              if (value == "NO_CONNECTION") {
-                setState(() {
-                  resp = "Oops. Please check your connection.";
-                  loading = false;
-                });
-              } else if (value == "NOT_AVAILABLE") {
+                        Map recUser = checkGlocalPayUser(cardId);
+
+             if (!recUser.containsKey("jamiaId")) {
                 setState(() {
                   resp = "This user is not available in Glocal Pay.";
                   loading = false;
@@ -148,10 +140,10 @@ class _ScanQRState extends State<ScanQR> {
                 numKeyBox!.put('num', "0");
                 Navigator.pop(context);
                 Get.to(SendMoney(
-                  receiverData: value,
+                  receiverData: recUser,
                 ));
               }
-            });
+           
           } else {
             setState(() {
               resp =

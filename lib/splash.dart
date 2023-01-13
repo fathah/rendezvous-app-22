@@ -8,11 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
 import 'package:rendezvous/api/get_teams.dart';
 import 'package:rendezvous/inc/Constants.dart';
+import 'package:rendezvous/models/db.dart';
 
 import 'Functions/getAPIData.dart';
 import 'View/Home/Home.dart';
 import 'inc/common.dart';
-import 'inc/strings.dart';
 import 'inc/transition.dart';
 
 class Splash extends StatefulWidget {
@@ -31,7 +31,7 @@ class _SplashState extends State<Splash> {
     super.initState();
     
     Timer(Duration(milliseconds: 3000), () {
-      if (mainBox!.get("userId") != null && mainBox!.get("cardNo") != null) {
+      if (mainBox!.get(DBKeys.userId) != null && mainBox!.get(DBKeys.cardNo) != null) {
         Navigator.of(context)
             .pushReplacement(FadeRoute(page: ParticipantHomeIndex()));
       } else {

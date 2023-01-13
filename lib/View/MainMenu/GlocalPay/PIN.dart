@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rendezvous/Components/NumKeyPad.dart';
+import 'package:rendezvous/Functions/getAPIData.dart';
 import 'package:rendezvous/Functions/glocalPayFunctions.dart';
 import 'package:rendezvous/View/MainMenu/GlocalPay/Success.dart';
 import 'package:rendezvous/View/Participant/Index.dart';
 import 'package:rendezvous/inc/Constants.dart';
 import 'package:rendezvous/inc/strings.dart';
+import 'package:rendezvous/models/glocal_coin.dart';
 
 // ignore: must_be_immutable
 class EnterPIN extends StatefulWidget {
@@ -103,11 +105,14 @@ class _EnterPINState extends State<EnterPIN> {
                 transfering();
                 print(
                     "${widget.receiver}, ${widget.amount},remarks: ${widget.remark}");
-                sendGlocalCoin(widget.receiver, widget.amount,
-                        remarks: widget.remark)
-                    .then((value) {
+
+                GCTransaction()
+                    .newTransaction(
+                        widget.receiver, widget.amount, widget.remark)
+                    .then((value) async{
+                  await getTransactionFromAPI();
                   Get.offAll(PaymentSuccess(
-                    isSuccess: value == "SUCCESS",
+                    isSuccess: value,
                   ));
                 });
               } else {

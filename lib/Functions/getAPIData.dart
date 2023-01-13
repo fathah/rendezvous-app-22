@@ -22,12 +22,14 @@ Future getJSON(File file) async {
 }
 
 Future getTransactionFromAPI() async {
-  var res = await http.post(Uri.parse(ROOT_URL + "/getTransactions.php"),
-      body: {"api": API_KEY, "userid": mainBox!.get(DBKeys.userId)});
+  String userId = mainBox!.get(DBKeys.userId);
+  var res = await http.get(
+    Uri.parse(NEW_API_ROOT + "glocalCoin/getTransactions.php?userid=$userId"),
+  );
 
   if (res.statusCode == 200) {
     var decode = json.decode(res.body);
-    if (decode['statusMsg'] == "AVAILABLE") {
+    if (decode['status'] == "available") {
       mainBox!.put("transactions", decode['data']);
       return decode['data'];
     } else {
@@ -88,4 +90,3 @@ Future getFeeds() async {
     return "NO_CONNECTION";
   }
 }
-
